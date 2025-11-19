@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Firms</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <h1>Firms List</h1>
+    <a th:href="@{/}">Home</a>
+    <a th:href="@{/firms/new}">Add New Firm</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="firm : ${firms}">
+                <td th:text="${firm.id}"></td>
+                <td th:text="${firm.name}"></td>
+                <td th:text="${firm.address}"></td>
+                <td>
+                    <a th:href="@{/firms/{id}(id=${firm.id})}">View</a>
+                    <a th:href="@{/firms/{id}/edit(id=${firm.id})}">Edit</a>
+                    <form class="delete-form" th:action="@{/firms/{id}/delete(id=${firm.id})}" method="post">
+                        <button type="submit" onclick="return confirm('Delete this firm?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

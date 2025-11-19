@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Suppliers</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <h1>Suppliers List</h1>
+    <a th:href="@{/}">Home</a>
+    <a th:href="@{/suppliers/new}">Add New Supplier</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Contact Info</th>
+                <th>Firm</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="supplier : ${suppliers}">
+                <td th:text="${supplier.id}"></td>
+                <td th:text="${supplier.name}"></td>
+                <td th:text="${supplier.contactInfo}"></td>
+                <td th:text="${supplier.firm.name}"></td>
+                <td>
+                    <a th:href="@{/suppliers/{id}(id=${supplier.id})}">View</a>
+                    <a th:href="@{/suppliers/{id}/edit(id=${supplier.id})}">Edit</a>
+                    <form class="delete-form" th:action="@{/suppliers/{id}/delete(id=${supplier.id})}" method="post">
+                        <button type="submit" onclick="return confirm('Delete this supplier?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

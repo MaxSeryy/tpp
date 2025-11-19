@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${supplier.id == null ? 'Create Supplier' : 'Edit Supplier'}">Supplier Form</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <h1 th:text="${supplier.id == null ? 'Create Supplier' : 'Edit Supplier'}">Supplier Form</h1>
+    
+    <form th:action="@{${supplier.id == null ? '/suppliers' : '/suppliers/' + supplier.id}}" 
+          th:object="${supplier}" 
+          method="post">
+        
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="*{name}" required/>
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red;"></span>
+        </div>
+        
+        <div>
+            <label for="contactInfo">Contact Info:</label>
+            <input type="text" id="contactInfo" th:field="*{contactInfo}" required/>
+            <span th:if="${#fields.hasErrors('contactInfo')}" th:errors="*{contactInfo}" style="color:red;"></span>
+        </div>
+        
+        <div>
+            <label for="firm">Firm:</label>
+            <select id="firm" th:field="*{firm.id}" required>
+                <option value="">-- Select Firm --</option>
+                <option th:each="firm : ${firms}" 
+                        th:value="${firm.id}" 
+                        th:text="${firm.name}"></option>
+            </select>
+            <span th:if="${#fields.hasErrors('firm')}" th:errors="*{firm}" style="color:red;"></span>
+        </div>
+        
+        <button type="submit" th:text="${supplier.id == null ? 'Create' : 'Update'}">Submit</button>
+        <a th:href="@{/suppliers}">Back to list</a>
+        <a th:href="@{/suppliers}">Cancel</a>
+    </form>
+</body>
+</html>

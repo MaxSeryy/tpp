@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${product.id == null ? 'Create Product' : 'Edit Product'}">Product Form</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <h1 th:text="${product.id == null ? 'Create Product' : 'Edit Product'}">Product Form</h1>
+    
+    <form th:action="@{${product.id == null ? '/products' : '/products/' + product.id}}" 
+          th:object="${product}" 
+          method="post">
+        
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="*{name}" required/>
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red;"></span>
+        </div>
+        
+        <div>
+            <label for="sku">SKU:</label>
+            <input type="number" id="sku" th:field="*{sku}" required/>
+            <span th:if="${#fields.hasErrors('sku')}" th:errors="*{sku}" style="color:red;"></span>
+        </div>
+        
+        <div>
+            <label for="price">Price:</label>
+            <input type="number" id="price" th:field="*{price}" required/>
+            <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" style="color:red;"></span>
+        </div>
+        
+        <div>
+            <label for="supplier">Supplier:</label>
+            <select id="supplier" th:field="*{supplier.id}" required>
+                <option value="">-- Select Supplier --</option>
+                <option th:each="supplier : ${suppliers}" 
+                        th:value="${supplier.id}" 
+                        th:text="${supplier.name}"></option>
+            </select>
+            <span th:if="${#fields.hasErrors('supplier')}" th:errors="*{supplier}" style="color:red;"></span>
+        </div>
+        
+        <button type="submit" th:text="${product.id == null ? 'Create' : 'Update'}">Submit</button>
+        <a th:href="@{/products}">Back to list</a>
+        <a th:href="@{/products}">Cancel</a>
+    </form>
+</body>
+</html>
