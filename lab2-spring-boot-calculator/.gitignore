@@ -9,3 +9,7 @@ mvnw.cmd
 *.iws
 *.iml
 *.ipr
+
+# Gradle
+.gradle/
+build/
